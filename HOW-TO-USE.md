@@ -84,3 +84,27 @@ cd ~/claude-seeds/laravel && git init && git add -A && git commit -m "init larav
 ## 一句话速查
 
 > 新 Laravel 项目:`laravel new` → `cp -rn ~/claude-seeds/laravel/. .` → `mv .claude/settings.local.json.example .claude/settings.local.json` → `composer require laravel/boost --dev` → `php artisan boost:install` → 补 `CLAUDE.md` 项目概述 → `claude`。
+
+---
+
+## 维护约定(项目持续开发时,边做边补,别等完工再整理)
+
+本项目这套配置其实是**两份**:
+- `~/claude-seeds/laravel/` —— 种子的「源」,git 托管,给未来新项目用
+- 当前项目仓库里的同款文件 —— live 副本,真正在生效
+
+**改通用约定时两边都要改**,否则未来新项目拿到的种子是旧的。判断一次改动属于哪一层:
+
+| 改动 | 同步到 | 举例 |
+|------|--------|------|
+| Laravel 通用约定 / skill 规则 / agent / hook 逻辑 | **种子**(改完 commit) | 给 pint hook 加新逻辑、改 laravel-best-practices 规则、新建通用 agent |
+| 语言无关的个人偏好 / 跨语言 agent | **用户级** `~/.claude/` | 新的工作风格准则、doc-generator 之类通用 agent |
+| 本项目业务逻辑 / 模型 / 路由 / specs / 项目概述 | **只本项目仓库** | Post 模型、业务规则、本项目特有约定 |
+
+工作模式:**Claude 主动判断 + 用户偶尔提醒**。
+- Claude 改完某个明显属于 Laravel 通用层的约定后,主动提一句「这个建议同步到种子,要我现在同步吗?」,用户点头再动。
+- 用户改完通用约定后说一句「同步到种子」,Claude 负责 `cp` 过去 + git commit。
+- 业务代码绝不往种子塞。
+
+**Why:** 边做边补成本几乎为零(刚写完代码最清楚什么能复用);一次性整理容易忘、容易漏、分不清通用 vs 专属。
+
