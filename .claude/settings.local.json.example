@@ -1,0 +1,49 @@
+{
+  "enabledMcpjsonServers": [
+    "laravel-boost"
+  ],
+  "permissions": {
+    "allow": [
+      "mcp__laravel-boost__search-docs",
+      "Read",
+      "Write",
+      "Edit",
+      "Bash(npm *)",
+      "Bash(node *)",
+      "Bash(php *)",
+      "Bash(composer *)",
+      "Bash(vendor/bin/pint *)",
+      "Bash(git status*)",
+      "Bash(git diff*)",
+      "Bash(git log*)",
+      "Bash(git show*)",
+      "Bash(git branch*)",
+      "Bash(git add*)",
+      "Bash(git commit*)",
+      "Bash(git stash*)",
+      "Bash(git checkout -b*)",
+      "Bash(git switch -c*)"
+    ],
+    "deny": [
+      "Bash(rm -rf *)",
+      "Read(.env)",
+      "Read(.env.*)",
+      "Bash(cat .env*)"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/pint-postedit.sh"
+          }
+        ]
+      }
+    ]
+  },
+  "model": "glm-5.2",
+  "autoCompactThreshold": 80
+}
