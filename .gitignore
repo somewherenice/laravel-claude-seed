@@ -1,4 +1,3 @@
-# 本地文件不入种子仓库
-.claude/settings.local.json
+# 本地文件不入种子仓库(种子仓库本身跟踪所有可分发内容)
 .DS_Store
 *.log
