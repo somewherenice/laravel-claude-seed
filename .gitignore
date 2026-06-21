@@ -1,0 +1,4 @@
+# 本地文件不入种子仓库
+.claude/settings.local.json
+.DS_Store
+*.log

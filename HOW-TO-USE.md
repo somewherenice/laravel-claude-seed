@@ -1,0 +1,83 @@
+# 如何在新 Laravel 项目复用这套 Claude Code 配置
+
+> 本文件是「Laravel 种子」(② 层)的使用说明。三个配置层各自独立、互不依赖:
+>
+> - **① 个人通用层** `~/.claude/CLAUDE.md` + `~/.claude/agents/` + `~/.claude/skills/` + `~/.claude/settings.json`
+>   语言无关的工作风格(Karpathy 准则、中文沟通、doc-generator agent 等)。**所有项目自动生效**,无需任何操作。
+> - **② Laravel 种子层** `~/claude-seeds/laravel/`(就是本文件所在目录)
+>   Laravel 通用配置(Boost 规范、PHP/Pint/PHPUnit 约定、laravel-boost MCP、n1-reviewer、pint hook、权限白名单)。每个新 Laravel 项目复制一次。
+> - **③ 项目专属层** 新项目仓库内的 `CLAUDE.md` 项目概述段 + `specs/` + `docs/` + 代码 + 项目记忆。手写,只属于该项目。
+
+---
+
+## 新项目工作流(照抄即可)
+
+```bash
+# 1. 建新 Laravel 项目
+laravel new my-app && cd my-app
+
+# 2. 拉入 ② 层 Laravel 种子配置(覆盖/合并进当前项目)
+cp -rn ~/claude-seeds/laravel/. .            # -n:不覆盖已存在的文件(如 .gitignore)
+# 注意:cp -n 不会覆盖已存在文件。种子里没有 README/.gitignore 之类,安全。
+# 若想强制全量覆盖,改用 cp -r(但会覆盖 laravel new 生成的 .gitignore 等,不建议)。
+
+# 3. 安装 laravel-boost(.mcp.json 已就位,但要装包才能跑 boost:mcp)
+composer require laravel/boost --dev
+php artisan boost:install                     # 生成 boost.json、注入 skills 等(按提示)
+
+# 4. 在新项目的 CLAUDE.md 顶部补 ③ 层:项目概述
+#    打开 CLAUDE.md,在 <laravel-boost-guidelines> 块之前/之后加一段:
+#    项目名、目录结构、当前状态、本项目特有约定。
+#    (种子 CLAUDE.md 顶部已有提示语,照做即可)
+
+# 5. 进 Claude Code
+claude
+# ① 层全局自动生效;② 层已在仓库;③ 层你刚写好。开干,不用再沟通任何约定。
+```
+
+---
+
+## 各文件作用(② 层清单)
+
+| 文件 | 作用 | 是否项目级必需 |
+|------|------|----------------|
+| `CLAUDE.md` | Laravel 通用指令(Boost guidelines 全文)。顶部留了填 ③ 层项目概述的提示 | 是 |
+| `.mcp.json` | 注册 `laravel-boost` MCP(跑 `php artisan boost:mcp`)。**必须项目级**,因为它绑定该项目的 artisan | 是 |
+| `boost.json` | laravel-boost 配置(启用的 skills 等) | 是 |
+| `AGENTS.md` | 给子 agent 的项目说明 | 可选 |
+| `.claude/settings.local.json` | 权限白名单(php/composer/pint/npm/git allow,rm -rf/.env deny)+ pint hook 注册 + MCP 启用。**本地、不入 git** | 是 |
+| `.claude/hooks/pint-postedit.sh` | PostToolUse hook:每次 Edit/Write .php 后自动跑 Pint 格式化。已用 `$CLAUDE_PROJECT_DIR` 做通用化,跨项目可用 | 是 |
+| `.claude/agents/n1-reviewer.md` | N+1 查询审查 agent | 是 |
+| `.claude/skills/laravel-best-practices/` | Laravel 最佳实践 skill(含 20 条 rules) | 是 |
+| `.claude/skills/tailwindcss-development/` | Tailwind 开发 skill | 是 |
+
+---
+
+## 常见问题
+
+**Q: `settings.local.json` 是本地文件,要不要进 git?**
+不要。它含本地权限/hook 设置,Claude Code 默认把它放 `.gitignore`。新项目 `cp` 进来后保持本地即可。团队共享权限用 `.claude/settings.json`(入 git),个人偏好用 `settings.local.json`。
+
+**Q: hook 不生效?**
+确认两点:① 脚本可执行(`chmod +x .claude/hooks/pint-postedit.sh`,种子已设);② `settings.local.json` 里 hook 命令是相对路径 `bash .claude/hooks/pint-postedit.sh`(已修好,不要改回绝对路径)。Claude Code 执行 hook 时 cwd 是项目根,相对路径能找到。
+
+**Q: `laravel-boost` MCP 报错连不上?**
+先 `composer require laravel/boost --dev`,再 `php artisan boost:install`。MCP 通过 `php artisan boost:mcp` 启动,缺包就起不来。
+
+**Q: 想升级种子里的约定(比如 Pint 规则变了)?**
+直接改 `~/claude-seeds/laravel/` 里的文件。建议把这个目录 `git init` 托管,改动有版本记录,多机同步也方便:
+```bash
+cd ~/claude-seeds/laravel && git init && git add -A && git commit -m "init laravel seed"
+```
+
+**Q: 项目记忆(memory)会带过来吗?**
+不会。记忆按项目路径隔离(`~/.claude/projects/<项目路径>/memory/`)。所以「我是谁、我怎么工作」这类个人事实写进 ① 层 `~/.claude/CLAUDE.md`(全局),而不是项目记忆。项目记忆只放该项目的领域知识。
+
+**Q: 下个项目不是 Laravel 怎么办?**
+① 层照常生效。② 层不用(它是 Laravel 专属)。可仿照这个种子,另建 `~/claude-seeds/<其他栈>/` 做对应栈的种子。
+
+---
+
+## 一句话速查
+
+> 新 Laravel 项目:`laravel new` → `cp -rn ~/claude-seeds/laravel/. .` → `composer require laravel/boost --dev` → `php artisan boost:install` → 补 `CLAUDE.md` 项目概述 → `claude`。
