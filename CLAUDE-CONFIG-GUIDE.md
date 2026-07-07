@@ -148,6 +148,17 @@ claude
 
 **判断:** 能用内置的就别自建。自建只在「内置不够、且可跨项目复用」时。
 
+### 可选扩展:工程流程闭环(superpowers)
+
+这套配置覆盖「知识层」(准则 / skill / 审计 / 文档生成),但**不含工程流程闭环**——强制 brainstorm → plan → TDD → code-review → systematic-debugging 的串联流程。内置的 Plan agent / TaskCreate 是按需调用,不强制。
+
+[superpowers](https://github.com/obra/superpowers) plugin 补的就是这块。装与不装的判断:
+
+- **学习 / 小项目:不装。** 现在这套够,强流程是负担。
+- **商用 / 多步复杂特性:按需装,装在项目级**(不全局)。它生成的 design / plan / review 文档对商用是资产(可追溯 / 审计 / 复盘),不是负担。
+- 装的话用 Karpathy「琐碎任务可自行判断」加**规模门槛**:单文件几行走 Karpathy 直接干,多步特性才走 superpowers 全流程;文档产出纳入 git 并定期清理过时的。
+- 安装:`/plugin install superpowers@claude-plugins-official`(本仓库已注册该 marketplace)。
+
 ---
 
 ## 7. 参考:一套 Laravel 栈种子的实际内容
