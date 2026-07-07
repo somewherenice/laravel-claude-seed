@@ -53,6 +53,8 @@ claude
 | `.claude/agents/n1-reviewer.md` | N+1 查询审查 agent | 是 |
 | `.claude/skills/laravel-best-practices/` | Laravel 最佳实践 skill(含 20 条 rules) | 是 |
 | `.claude/skills/tailwindcss-development/` | Tailwind 开发 skill | 是 |
+| `.claude/skills/laravel-security-audit/` | 安全审计 checklist skill(7 维度 grep/artisan 命令,审计时用;与 best-practices 的编码时安全规则互补) | 是 |
+| `docs/adr/` (README + 0000-template) | ADR 四段式决策记录模板与约定(append-only / 编号 / 命名) | 可选 |
 
 ---
 
@@ -75,6 +77,9 @@ cd ~/claude-seeds/laravel && git init && git add -A && git commit -m "init larav
 
 **Q: 项目记忆(memory)会带过来吗?**
 不会。记忆按项目路径隔离(`~/.claude/projects/<项目路径>/memory/`)。所以「我是谁、我怎么工作」这类个人事实写进 ① 层 `~/.claude/CLAUDE.md`(全局),而不是项目记忆。项目记忆只放该项目的领域知识。
+
+**Q: 新项目要 specs 文档(PRD/架构/API/SPEC)怎么办?**
+直接跑 `doc-generator` agent(① 层全局自带,在 `~/.claude/agents/`)。它读项目代码,生成 `specs/PRD.md`、`specs/ARCHITECTURE.md`、`specs/SPEC.md`、`specs/API.md` + `docs/UML.md` 全套。别手动建空文件,也别把 specs 模板塞进种子——内容是项目专属的,骨架由 agent 按实际代码动态生成,塞模板反而会过时。
 
 **Q: 下个项目不是 Laravel 怎么办?**
 ① 层照常生效。② 层不用(它是 Laravel 专属)。可仿照这个种子,另建 `~/claude-seeds/<其他栈>/` 做对应栈的种子。
