@@ -190,6 +190,10 @@ claude
 | `.claude/hooks/pint-postedit.sh` | PostToolUse:改 .php 后自动跑 Pint |
 | `.claude/settings.local.json.example` | 权限白名单 + hook 注册 + MCP 启用模板 |
 | `docs/adr/` | ADR 四段式模板(README + 0000-template) |
+| `docs/commit-conventions.md` | Commit 规范 + 分支策略 + PR 模板 |
+| `docs/deployment-checklist.md` | 部署 / 回滚 checklist(Laravel Cloud) |
+| `docs/observability.md` | 结构化日志 / 错误上报 / 监控指标 |
+| `global-layer/` | ① 层全局脱敏副本(Karpathy CLAUDE.md + doc-generator agent) |
 
 ### ③ 层 项目内
 

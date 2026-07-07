@@ -55,6 +55,9 @@ claude
 | `.claude/skills/tailwindcss-development/` | Tailwind 开发 skill | 是 |
 | `.claude/skills/laravel-security-audit/` | 安全审计 checklist skill(7 维度 grep/artisan 命令,审计时用;与 best-practices 的编码时安全规则互补) | 是 |
 | `docs/adr/` (README + 0000-template) | ADR 四段式决策记录模板与约定(append-only / 编号 / 命名) | 可选 |
+| `docs/commit-conventions.md` | Commit message 规范 + 分支策略 + PR 模板 | 是 |
+| `docs/deployment-checklist.md` | 部署前 / 部署后 / 回滚 checklist(Laravel Cloud) | 是 |
+| `docs/observability.md` | 结构化日志 / 错误上报 / 监控指标约定 | 是 |
 
 ---
 
