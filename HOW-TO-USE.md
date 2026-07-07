@@ -60,6 +60,9 @@ claude
 | `docs/observability.md` | 结构化日志 / 错误上报 / 监控指标约定 | 是 |
 | `docs/ci-cd.md` | CI 策略:跑什么 / 门禁 / 本地复现 | 是 |
 | `docs/ci-templates/github-actions.yml` | GitHub Actions 模板(PHPUnit + Pint + composer audit),复制到 `.github/workflows/` 生效 | 是 |
+| `docs/code-review.md` | PR review / 自查 checklist,指向 n1-reviewer / security-audit / best-practices | 是 |
+| `docs/environments.md` | local / staging / production 配置隔离约定 | 是 |
+| `docs/backup-recovery.md` | 备份对象 / 频率 / 恢复演练 / 灾备按需 | 是 |
 
 ---
 

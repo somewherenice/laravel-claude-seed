@@ -195,6 +195,9 @@ claude
 | `docs/observability.md` | 结构化日志 / 错误上报 / 监控指标 |
 | `docs/ci-cd.md` | CI 策略:跑什么 / 门禁 / 本地复现 |
 | `docs/ci-templates/github-actions.yml` | CI 模板(PHPUnit + Pint + composer audit) |
+| `docs/code-review.md` | PR review / 自查 checklist |
+| `docs/environments.md` | local / staging / prod 配置隔离 |
+| `docs/backup-recovery.md` | 备份 / 恢复演练 / 灾备按需 |
 | `global-layer/` | ① 层全局脱敏副本(Karpathy CLAUDE.md + doc-generator agent) |
 
 ### ③ 层 项目内
