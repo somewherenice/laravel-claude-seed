@@ -58,6 +58,8 @@ claude
 | `docs/commit-conventions.md` | Commit message 规范 + 分支策略 + PR 模板 | 是 |
 | `docs/deployment-checklist.md` | 部署前 / 部署后 / 回滚 checklist(Laravel Cloud) | 是 |
 | `docs/observability.md` | 结构化日志 / 错误上报 / 监控指标约定 | 是 |
+| `docs/ci-cd.md` | CI 策略:跑什么 / 门禁 / 本地复现 | 是 |
+| `docs/ci-templates/github-actions.yml` | GitHub Actions 模板(PHPUnit + Pint + composer audit),复制到 `.github/workflows/` 生效 | 是 |
 
 ---
 

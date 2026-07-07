@@ -36,6 +36,7 @@ boost.json / .mcp.json   ② 层配置(laravel-boost MCP)
     laravel-security-audit/      7 维度安全审计 skill
     tailwindcss-development/     Tailwind v4 skill
 docs/adr/                ADR 四段式模板(README + 0000-template)
+docs/ci-templates/       GitHub Actions 模板(PHPUnit + Pint + audit)
 global-layer/            ① 层脱敏副本(Karpathy CLAUDE.md + doc-generator agent)
 ```
 

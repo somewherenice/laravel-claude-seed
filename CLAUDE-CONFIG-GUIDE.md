@@ -193,6 +193,8 @@ claude
 | `docs/commit-conventions.md` | Commit 规范 + 分支策略 + PR 模板 |
 | `docs/deployment-checklist.md` | 部署 / 回滚 checklist(Laravel Cloud) |
 | `docs/observability.md` | 结构化日志 / 错误上报 / 监控指标 |
+| `docs/ci-cd.md` | CI 策略:跑什么 / 门禁 / 本地复现 |
+| `docs/ci-templates/github-actions.yml` | CI 模板(PHPUnit + Pint + composer audit) |
 | `global-layer/` | ① 层全局脱敏副本(Karpathy CLAUDE.md + doc-generator agent) |
 
 ### ③ 层 项目内

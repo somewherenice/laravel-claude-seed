@@ -1,0 +1,98 @@
+# GitHub Actions CI 模板(Laravel 12 + PHP 8.2)
+#
+# 用法:复制本文件到项目 .github/workflows/ci.yml,按需裁剪 job。
+# 跑什么:PHPUnit 测试 + Pint 格式检查 + composer 依赖安全审计,三 job 并行。
+# 本地复现:php artisan test --compact && vendor/bin/pint --test && composer audit
+# 约定详见同目录上级的 ../ci-cd.md。
+
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: PHPUnit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mbstring, xml, ctype, iconv, intl, dom, filter, hash, openssl, pdo_sqlite
+          coverage: none   # 出覆盖率改 xdebug,见下方注释块
+
+      - name: Cache Composer
+        uses: actions/cache@v4
+        with:
+          path: vendor
+          key: composer-${{ runner.os }}-${{ hashFiles('composer.lock') }}
+          restore-keys: composer-${{ runner.os }}-
+
+      - name: Composer install
+        run: composer install --prefer-dist --no-interaction --no-progress
+
+      - name: Prepare environment
+        run: |
+          if [ -f .env.example ]; then cp .env.example .env; fi
+          php artisan key:generate
+
+      - name: Run tests
+        run: php artisan test --compact
+
+      # 可选:覆盖率上传。把上方 coverage 改 xdebug,取消下两行注释。
+      # - name: Tests with coverage
+      #   run: php artisan test --compact --coverage-clover coverage.xml
+      # - name: Upload coverage to Codecov
+      #   uses: codecov/codecov-action@v4
+
+  lint:
+    name: Pint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mbstring, xml, ctype, iconv, intl, dom, filter, hash, openssl
+          coverage: none
+
+      - name: Cache Composer
+        uses: actions/cache@v4
+        with:
+          path: vendor
+          key: composer-${{ runner.os }}-${{ hashFiles('composer.lock') }}
+          restore-keys: composer-${{ runner.os }}-
+
+      - name: Composer install
+        run: composer install --prefer-dist --no-interaction --no-progress
+
+      - name: Pint check
+        run: vendor/bin/pint --test
+
+  audit:
+    name: Dependency audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          coverage: none
+
+      - name: Composer install
+        run: composer install --prefer-dist --no-interaction --no-progress
+
+      - name: composer audit
+        run: composer audit
