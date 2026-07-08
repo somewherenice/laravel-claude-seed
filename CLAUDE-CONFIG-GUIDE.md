@@ -162,8 +162,7 @@ claude
 **如何触发使用**(装了之后):
 
 - **自动触发(主要方式)**:superpowers 的 skills(brainstorming / writing-plans / test-driven-development / systematic-debugging / requesting-code-review 等)按 description 自动加载。你描述要做的东西(如"做个用户认证模块"),Claude 自动走 brainstorm -> 出 spec -> writing-plans -> TDD -> review,不用你做特别操作。
-- **显式触发**:在对话里说"用 superpowers 流程"或点具体 skill 名(如"走 brainstorming"),Claude 调用对应 skill。
-- **没有 slash 命令**:superpowers 只有 skills,无 `/brainstorming`、`/using-superpowers` 之类的斜杠命令。不用记命令,描述任务即可。
+- **显式触发**:输入 `/skill-name` 调用具体 skill,如 `/using-superpowers`(总入口)、`/brainstorming`、`/writing-plans`、`/test-driven-development`、`/systematic-debugging`、`/requesting-code-review`;或在对话里说"用 superpowers 流程"。
 - **你控制**:CLAUDE.md / AGENTS.md 指示优先于 superpowers skill。规模门槛写进项目 CLAUDE.md,小任务 Claude 直接干,不会强行走全套。
 
 ---

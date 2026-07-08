@@ -77,7 +77,7 @@ claude
 
 ## 开发流程:superpowers(可选,多步特性用)
 
-做多步复杂特性时,可用 [superpowers](https://github.com/obra/superpowers) plugin 走 brainstorm -> plan -> TDD -> review 闭环。装了之后**自动触发**(描述任务即可,无 slash 命令),规模门槛与触发方式见 `CLAUDE-CONFIG-GUIDE.md` §6。
+做多步复杂特性时,可用 [superpowers](https://github.com/obra/superpowers) plugin 走 brainstorm -> plan -> TDD -> review 闭环。装了之后**自动触发**(描述任务即可),也可 `/skill-name` 显式调用(如 `/using-superpowers`、`/brainstorming`),规模门槛与触发方式见 `CLAUDE-CONFIG-GUIDE.md` §6。
 
 ---
 
