@@ -10,6 +10,21 @@
 
 ---
 
+## 前置:① 层全局层就绪(仅首次 / 新机器需要)
+
+这套种子的 ②③ 层在新项目内,但 ① 层(语言无关的工作风格、通用 agent)在用户级 `~/.claude/`,所有项目自动生效,**不随种子复制**。若你的 `~/.claude/` 还没配 ① 层(新机器 / 别人首次用),先做这步:
+
+```bash
+mkdir -p ~/.claude/agents
+cp ~/claude-seeds/laravel/global-layer/CLAUDE.md ~/.claude/CLAUDE.md
+cp ~/claude-seeds/laravel/global-layer/doc-generator.md ~/.claude/agents/doc-generator.md
+# 然后编辑 ~/.claude/CLAUDE.md,改成本人偏好的沟通语言和准则
+```
+
+`~/.claude/settings.json`(模型、API token)需自备,含凭证不入种子。已配过 ① 层的机器跳过本步。
+
+---
+
 ## 新项目工作流(照抄即可)
 
 ```bash
