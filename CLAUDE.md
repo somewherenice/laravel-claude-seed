@@ -199,8 +199,10 @@ This project has domain-specific skills available in `**/skills/**`. You MUST ac
 以下文档该写但不会自动产生。AI 在合适时机主动建议,用户确认后执行:
 
 - **架构决策 -> ADR**:检测到用户做了有架构意义的决策(选方案、定数据模型、改关键约定、引入/移除依赖)时,主动建议"这该写条 ADR,要我套 `docs/adr/0000-template.md` 整理吗?"。确认后套四段式写 `docs/adr/NNNN-*.md` 并追加索引到 `adr/README.md`。
-- **业务代码成型 -> specs**:业务代码到一定量、功能成型时,主动建议"该跑 doc-generator 生成 specs 了,要现在跑吗?"。确认后调用 `doc-generator` agent。
-- **跨模块设计 -> 设计文档**:讨论跨模块/复杂设计时,主动建议"这值得写篇设计文档放 `docs/`,要我整理吗?"。
+- **业务代码成型 -> specs + UML/架构图**:业务代码到一定量、功能成型时,主动建议"该跑 doc-generator 生成 specs 了,要现在跑吗?"。确认后调用 `doc-generator` agent,产出 `specs/`(PRD/ARCHITECTURE/SPEC/API)+ `docs/UML.md`(架构图/类图/时序图)。
+- **跨模块/复杂设计 -> 开发文档**:讨论跨模块设计、复杂机制时,主动建议"这值得写篇开发文档放 `docs/`,要我整理吗?"。如 harness 设计、循环机制、数据流等(参考 laravel-ai-study 的 `ai-agent-harness.md`、`loop-engineering.md`)。
+
+工程约定文档(commit/deployment/observability 等)种子已带,项目直接用,不重写。
 
 不自动跑:doc-generator 是重 agent 调用,ADR 需人确认是架构决策,自动跑时机/产出不准。AI 只建议,人确认后才执行。
 
