@@ -29,6 +29,7 @@ composer require laravel/boost --dev
 php artisan boost:install                     # 同步 boost.json、注入 guidelines + MCP + skills
 # boost.json 的 "skills" 只列 boost 管理的 skill(php artisan boost:list-skills 可查,目前仅 laravel-best-practices)。
 # 本地 skill(tailwindcss-development / laravel-security-audit)放 .claude/skills/ 即可,Claude Code 自动识别,不进 boost.json。
+# 切勿把本地 skill 列进 boost.json:boost 会同步管理它,后续 boost:install 把它从 skills 移除时会删除其 .claude/skills/ 文件。
 
 # 4. 在新项目的 CLAUDE.md 顶部补 ③ 层:项目概述
 #    打开 CLAUDE.md,在 <laravel-boost-guidelines> 块之前/之后加一段:
