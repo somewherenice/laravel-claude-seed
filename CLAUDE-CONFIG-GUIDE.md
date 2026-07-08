@@ -30,7 +30,7 @@ Claude Code 的配置散落在 `~/.claude/`(全局)、项目内 `.claude/`、`CL
 
 - **放:** 该栈的编码规范、工具链自动化 hook、栈专属 skill/agent、MCP 注册、权限白名单模板、文档模板(ADR 等)。
 - **不放:** 项目业务逻辑、项目概述、真实决策记录。
-- **生效方式:** 新项目 `cp -rn ~/claude-seeds/<stack>/. .` 拉入;`settings.local.json` 以 `.example` 模板分发(本地文件不入 git)。
+- **生效方式:** 新项目 `rsync -a --ignore-existing --exclude='.git' ~/claude-seeds/<stack>/ .` 拉入;`settings.local.json` 以 `.example` 模板分发(本地文件不入 git)。
 - **实例(Laravel):** Boost guidelines、Pint post-edit hook、`laravel-best-practices` / `tailwindcss-development` / `laravel-security-audit` skill、`n1-reviewer` agent、`laravel-boost` MCP、ADR 模板。
 - **建议 git 托管** 这个种子目录,改动有版本记录,多机同步方便。
 
@@ -101,8 +101,8 @@ Claude Code 的配置散落在 `~/.claude/`(全局)、项目内 `.claude/`、`CL
 # 1. 建新项目
 <stack> new my-app && cd my-app
 
-# 2. 拉入 ② 层栈种子(-n 不覆盖已存在的文件)
-cp -rn ~/claude-seeds/<stack>/. .
+# 2. 拉入 ② 层栈种子(只补不覆盖,排除 .git)
+rsync -a --ignore-existing --exclude='.git' ~/claude-seeds/<stack>/ .
 
 # 2b. settings.local.json 以 .example 分发,改名生效
 mv .claude/settings.local.json.example .claude/settings.local.json

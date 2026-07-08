@@ -16,10 +16,10 @@
 # 1. 建新 Laravel 项目
 laravel new my-app && cd my-app
 
-# 2. 拉入 ② 层 Laravel 种子配置(覆盖/合并进当前项目)
-cp -rn ~/claude-seeds/laravel/. .            # -n:不覆盖已存在的文件(如 .gitignore)
-# 注意:cp -n 不会覆盖已存在文件。种子里没有 README/.gitignore 之类,安全。
-# 若想强制全量覆盖,改用 cp -r(但会覆盖 laravel new 生成的 .gitignore 等,不建议)。
+# 2. 拉入 ② 层 Laravel 种子配置(只补不覆盖,排除 .git)
+rsync -a --ignore-existing --exclude='.git' ~/claude-seeds/laravel/ .
+# --ignore-existing:新项目已有的文件(README.md / .gitignore 等)不覆盖,只补种子独有的
+# --exclude='.git':必须,否则种子的 commits/objects 混进新项目 git,状态会乱
 
 # 2b. settings.local.json 是本地文件,种子以 .example 模板形式分发,改名生效:
 mv .claude/settings.local.json.example .claude/settings.local.json
@@ -96,7 +96,7 @@ cd ~/claude-seeds/laravel && git init && git add -A && git commit -m "init larav
 
 ## 一句话速查
 
-> 新 Laravel 项目:`laravel new` → `cp -rn ~/claude-seeds/laravel/. .` → `mv .claude/settings.local.json.example .claude/settings.local.json` → `composer require laravel/boost --dev` → `php artisan boost:install` → 补 `CLAUDE.md` 项目概述 → `claude`。
+> 新 Laravel 项目:`laravel new` → `rsync -a --ignore-existing --exclude='.git' ~/claude-seeds/laravel/ .` → `mv .claude/settings.local.json.example .claude/settings.local.json` → `composer require laravel/boost --dev` → `php artisan boost:install` → 补 `CLAUDE.md` 项目概述 → `claude`。
 
 ---
 
