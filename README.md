@@ -55,3 +55,7 @@ global-layer/            ① 层脱敏副本(Karpathy CLAUDE.md + doc-generator 
 ## 状态
 
 v0.1,持续完善。个人实践分享,非权威标准。欢迎借鉴、按需裁剪。
+
+## License
+
+[MIT](LICENSE) © 2026 Wangfuyan
