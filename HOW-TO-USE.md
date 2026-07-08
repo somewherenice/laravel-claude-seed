@@ -58,6 +58,23 @@ claude
 
 ---
 
+## 项目文档产出标准(每个项目都该有)
+
+③ 层文档内容因项目而异,但**类型固定**。新项目按下面清单补齐:
+
+| 文档 | 何时写 | 怎么产生 |
+|---|---|---|
+| `CLAUDE.md` 项目概述 | bootstrap 后立刻 | 手写(工作流步骤 4) |
+| `specs/`(PRD / ARCHITECTURE / SPEC / API)+ `docs/UML.md` | 有业务代码后 | 跑 `doc-generator` agent,读代码生成全套 |
+| `docs/adr/NNNN-*.md` 真实 ADR | 做了架构决策时 | 复制 `docs/adr/0000-template.md`,四段式写,索引追加到 `adr/README.md` |
+| `docs/` 项目专属设计文档 | 有跨模块 / 复杂设计时 | 手写,见名知意 |
+
+工程约定(commit / deployment / observability 等)种子已带,项目直接用,不重写。
+
+> 例:laravel-ai-study(数据核对 agent 项目)在 `docs/adr/` 写了 `0001-scheduled-publishing-*.md`,在 `docs/` 写了 `ai-agent-harness.md`、`loop-engineering.md` 等设计文档,`docs/UML.md` 由 doc-generator 生成。内容是该项目专属,但"有架构决策写 ADR、有复杂设计写设计文档"是通用要求。
+
+---
+
 ## 各文件作用(② 层清单)
 
 | 文件 | 作用 | 是否项目级必需 |
