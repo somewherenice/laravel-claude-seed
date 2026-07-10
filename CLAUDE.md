@@ -207,3 +207,14 @@ This project has domain-specific skills available in `**/skills/**`. You MUST ac
 不自动跑:doc-generator 是重 agent 调用,ADR 需人确认是架构决策,自动跑时机/产出不准。AI 只建议,人确认后才执行。
 
 ---
+
+## superpowers / subagent 使用须知(AI 必读)
+
+用 superpowers 的 `subagent-driven-development`(或任何 Task/Agent 分派)做 Laravel 任务时,务必:
+
+- **subagent 是全新上下文,看不到本文件的 Boost guidelines**。superpowers 的 implementer / code-quality-reviewer prompt 模板是语言无关的,不含 Laravel 规范。优先级「CLAUDE.md > superpowers」只对主会话有效,subagent 不继承。
+- **dispatch 时必须手动注入** Laravel 硬约束:把 `.claude/superpowers/laravel-subagent-context.md` 全文 append 到 superpowers implementer prompt;reviewer 额外 append 其「reviewer 检查维度」段。
+- **主会话亲自做 Laravel 特定步骤**(不靠 subagent 自觉):改代码前 `search-docs`、改表前 `database-schema`、收尾 `vendor/bin/pint --dirty`、URL 用 named route、Model 用 `casts()` 方法。
+- 凡是用 subagent 做领域任务,先问:subagent 能看到该领域的 CLAUDE.md 规范吗?看不到就手动注入,别默认它知道。
+
+---
