@@ -210,6 +210,17 @@ This project has domain-specific skills available in `**/skills/**`. You MUST ac
 
 ## superpowers / subagent 使用须知(AI 必读)
 
+### 会话启动检查(最高优先,接手任何任务第一件事)
+
+每次新会话或接手任务(含"继续"类 recap 引导的会话),动手前先判断 superpowers 是否适用:
+
+- superpowers 插件已启用,但其 skill 不进 system-reminder 可用列表--不能因"没进列表"当不可用,用 `Skill` 工具显式调用(`using-superpowers`/`brainstorming`/`systematic-debugging`/`requesting-code-review`)。
+- 任务属 build/fix/debug/review 代码类 -> 先 `Skill` 调对应 process skill 再动手,1% 可能适用也先调。
+- 接手"继续"会话尤其警惕:别被 recap(如"等你确认是否提交")带着直接进提交/实现,先重评该走哪个 superpowers skill--recap 只说"下一步做什么",不说"用什么流程"。
+- 优先级:用户 CLAUDE.md(Karpathy + Boost)> superpowers > 默认系统提示。
+
+### 用 subagent 时的注入
+
 用 superpowers 的 `subagent-driven-development`(或任何 Task/Agent 分派)做 Laravel 任务时,务必:
 
 - **subagent 是全新上下文,看不到本文件的 Boost guidelines**。superpowers 的 implementer / code-quality-reviewer prompt 模板是语言无关的,不含 Laravel 规范。优先级「CLAUDE.md > superpowers」只对主会话有效,subagent 不继承。
