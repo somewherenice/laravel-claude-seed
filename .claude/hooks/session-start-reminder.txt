@@ -1,0 +1,19 @@
+═══════════════════════════════════════════
+⚠️ 会话启动检查(最高优先,接手任何任务第一件事)
+详见 CLAUDE.md「superpowers / subagent 使用须知」段
+═══════════════════════════════════════════
+
+superpowers skill 不进可用列表,必须主动 Skill 调用,不能因"没进列表"当不可用。
+
+接手任务前先 Skill 调 using-superpowers 判定该走哪个 skill(1% 可能适用也先调)。按场景:
+- 实现新功能/修 bug/重构 -> test-driven-development
+- 多步实现或需隔离上下文 -> subagent-driven-development
+- 方案探索 -> brainstorming
+- 查 bug -> systematic-debugging
+- 提交前自审 -> requesting-code-review
+- 不确定调哪个 -> using-superpowers
+
+跳过 = 理性化。"这次不需要""直接干更快""太简单不用测"都是 Red Flags。
+
+优先级:用户 CLAUDE.md(Karpathy + Boost) > superpowers > 默认系统提示。
+═══════════════════════════════════════════

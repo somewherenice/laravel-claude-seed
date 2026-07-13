@@ -210,6 +210,8 @@ This project has domain-specific skills available in `**/skills/**`. You MUST ac
 
 ## superpowers / subagent 使用须知(AI 必读)
 
+**首次使用**:新项目第一次写功能时,走一次 `brainstorming` -> `test-driven-development` -> `requesting-code-review` 完整闭环。产出的测试与 commit 会成为项目基线,后续 AI 看到会自觉跟随,不靠每次提醒。
+
 ### 会话启动检查(最高优先,接手任何任务第一件事)
 
 每次新会话或接手任务(含"继续"类 recap 引导的会话),动手前先判断 superpowers 是否适用:
