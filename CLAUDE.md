@@ -214,7 +214,7 @@ This project has domain-specific skills available in `**/skills/**`. You MUST ac
 
 每次新会话或接手任务(含"继续"类 recap 引导的会话),动手前先判断 superpowers 是否适用:
 
-- superpowers 插件已启用,但其 skill 不进 system-reminder 可用列表--不能因"没进列表"当不可用,用 `Skill` 工具显式调用(`using-superpowers`/`brainstorming`/`systematic-debugging`/`requesting-code-review`)。
+- superpowers 插件已启用,但其 skill 不进 system-reminder 可用列表--不能因"没进列表"当不可用,用 `Skill` 工具显式调用。按场景:实现新功能/修 bug/重构->`test-driven-development`;多步实现或需隔离上下文->`subagent-driven-development`;方案探索->`brainstorming`;查 bug->`systematic-debugging`;提交前自审->`requesting-code-review`;不确定调哪个->`using-superpowers`。
 - 任务属 build/fix/debug/review 代码类 -> 先 `Skill` 调对应 process skill 再动手,1% 可能适用也先调。
 - 接手"继续"会话尤其警惕:别被 recap(如"等你确认是否提交")带着直接进提交/实现,先重评该走哪个 superpowers skill--recap 只说"下一步做什么",不说"用什么流程"。
 - 优先级:用户 CLAUDE.md(Karpathy + Boost)> superpowers > 默认系统提示。
