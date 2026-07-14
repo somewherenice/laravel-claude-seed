@@ -234,6 +234,6 @@ This project has domain-specific skills available in `**/skills/**`. You MUST ac
 
 brainstorming / 出方案时,凡涉及「与现有架构交互」的断言(auth/guard/middleware/路由/模型关系/配置/已有命令/已有测试写法),先读实际代码验证,不凭框架一般知识脑补。每个「我假设 X 能工作」要么读代码 / `search-docs` / `database-schema` 证实,要么标「待验证」,绝不静默假设。高发区:鉴权/多 guard、中间件顺序、Eloquent morph、已有 listener/命令/测试认证方式。
 
-> 会话开始先读 `docs/lessons.md` 把翻车案例载入上下文,设计/编码时对照防坑。案例库持续积累,新增教训追加于该文件,勿往本文件堆砌。
+> `docs/lessons.md` 是翻车案例档案(持续积累,新增教训追加于此,勿往本文件堆砌)。会话开始对照该文件,把**尚无对应 memory feedback 条目**的案例转写入项目 memory(幂等,已有则跳过;按 `~/.claude/CLAUDE.md` 的 memory 段格式,每条一个文件 + MEMORY.md 索引),之后靠 memory 按场景 recall,不重复导入、不每次全量读文件。
 
 ---
