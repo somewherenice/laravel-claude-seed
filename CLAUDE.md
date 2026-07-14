@@ -230,13 +230,10 @@ This project has domain-specific skills available in `**/skills/**`. You MUST ac
 - **主会话亲自做 Laravel 特定步骤**(不靠 subagent 自觉):改代码前 `search-docs`、改表前 `database-schema`、收尾 `vendor/bin/pint --dirty`、URL 用 named route、Model 用 `casts()` 方法。
 - 凡是用 subagent 做领域任务,先问:subagent 能看到该领域的 CLAUDE.md 规范吗?看不到就手动注入,别默认它知道。
 
-### 设计/方案阶段:与现有架构交互的假设必须读代码验证(AI 必读)
+### 设计/方案阶段:与现有架构交互的假设必须读代码验证
 
-brainstorming / 出方案时,凡涉及「与现有架构交互」的断言(auth/guard/middleware/路由/模型关系/配置/已有命令/已有测试写法),必须先读实际代码验证,不能凭框架一般知识脑补。这条是 `brainstorming` 阶段最易翻车的地方。
+brainstorming / 出方案时,凡涉及「与现有架构交互」的断言(auth/guard/middleware/路由/模型关系/配置/已有命令/已有测试写法),先读实际代码验证,不凭框架一般知识脑补。每个「我假设 X 能工作」要么读代码 / `search-docs` / `database-schema` 证实,要么标「待验证」,绝不静默假设。高发区:鉴权/多 guard、中间件顺序、Eloquent morph、已有 listener/命令/测试认证方式。
 
-- 真实教训:设计 RBAC 时假设 `Gate::before` 能拿到当前用户,没读 `config/auth.php` 就下笔--实际生产用 `sso` guard、Gate 走默认 `web` guard 取到 null,整个 RBAC 在生产失效。直到用户要求自审、读了 `auth.php`/`AdminDriver`/`Saml2SignedIn` 才发现。**设计阶段没读代码 = 给后面埋雷**。
-- 判据:每个「我假设 X 能工作」的点,要么读代码 / `search-docs` / `database-schema` 证实,要么在设计里显式标「待验证」,绝不静默假设。
-- 呈现设计每节前自问:这节有没有我没读过代码就断言"能工作"的点?有就去读,别先呈现。
-- 高发区:鉴权/多 guard、中间件链与顺序、路由模型绑定、Eloquent 关系与 morph、已有事件/listener/命令的行为、已有测试的认证方式--凡是"我以为框架/现有代码会这样"的地方,都是雷区。
+> 会话开始先读 `docs/lessons.md` 把翻车案例载入上下文,设计/编码时对照防坑。案例库持续积累,新增教训追加于该文件,勿往本文件堆砌。
 
 ---
