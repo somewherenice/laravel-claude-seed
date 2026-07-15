@@ -237,3 +237,16 @@ brainstorming / 出方案时,凡涉及「与现有架构交互」的断言(auth/
 > `docs/lessons.md` 是翻车案例档案(持续积累,新增教训追加于此,勿往本文件堆砌)。会话开始对照该文件,把**尚无对应 memory feedback 条目**的案例转写入项目 memory(幂等,已有则跳过;按 `~/.claude/CLAUDE.md` 的 memory 段格式,每条一个文件 + MEMORY.md 索引),之后靠 memory 按场景 recall,不重复导入、不每次全量读文件。
 
 ---
+
+## Figma MCP 使用约定(用 figma 设计稿生成代码时)
+
+Figma MCP server(`https://mcp.figma.com/mcp`)为 HTTP 远程 server,OAuth 授权,无需本地配 token。仅当用 figma 设计稿驱动代码生成时遵守:
+
+- MCP 提供 assets 端点,可下发 image/SVG 资源。
+- **IMPORTANT**:MCP 返回 localhost 来源的图片/SVG 时,直接用该来源,不要另存占位。
+- **IMPORTANT**:不要引入新的图标包,所需资产都应在 Figma payload 里。
+- **IMPORTANT**:若已提供 localhost 来源,不要用/造占位符。
+- 生成流程:`get_design_context` 取结构化表示(过大则先 `get_metadata` 再精取节点)-> `get_screenshot` 取视觉参照 -> 下资产并转项目组件/token 实现 -> 对照 Figma 截图校验 1:1。
+- MCP 输出(常为 React + Tailwind)是设计/行为表示,非最终代码风格;转成项目框架、复用既有组件与设计 token,不照搬。
+
+---
