@@ -238,6 +238,11 @@ brainstorming / 出方案时,凡涉及「与现有架构交互」的断言(auth/
 
 ---
 
-## 审计日志(全项目遵守)
+## 审计日志 + 密码策略 + RBAC(全项目遵守)
 
-新项目须实现结构化审计日志,见 `docs/audit-logging.md`(覆盖等保贴出的 8 条需求:用户/管理员活动、登录登出失败、特权操作、字段、数据访问/增删改、NTP、导出)。走 Laravel Log(`audit` 通道 + `AuditLogger` 封装),不建 DB 表、不加依赖。首次实现走 brainstorming -> TDD -> code-review 闭环。
+新项目须实现审计日志、密码策略、RBAC,见:
+- `docs/audit-logging.md`(审计日志约定,覆盖等保贴出的 8 条需求)
+- `docs/password-policy.md`(密码策略约定)
+- `docs/rbac.md`(自建 RBAC 约定)
+
+审计日志走 Laravel Log(`audit` 通道 + `AuditLogger` 封装),不建 DB 表、不加依赖;密码策略、RBAC 见上述文档。首次实现走 brainstorming -> TDD -> code-review 闭环。
