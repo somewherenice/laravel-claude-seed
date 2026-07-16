@@ -237,3 +237,7 @@ brainstorming / 出方案时,凡涉及「与现有架构交互」的断言(auth/
 > `docs/lessons.md` 是翻车案例档案(持续积累,新增教训追加于此,勿往本文件堆砌)。会话开始对照该文件,把**尚无对应 memory feedback 条目**的案例转写入项目 memory(幂等,已有则跳过;按 `~/.claude/CLAUDE.md` 的 memory 段格式,每条一个文件 + MEMORY.md 索引),之后靠 memory 按场景 recall,不重复导入、不每次全量读文件。
 
 ---
+
+## 审计日志(全项目遵守)
+
+新项目须实现结构化审计日志,见 `docs/audit-logging.md`(覆盖等保贴出的 8 条需求:用户/管理员活动、登录登出失败、特权操作、字段、数据访问/增删改、NTP、导出)。走 Laravel Log(`audit` 通道 + `AuditLogger` 封装),不建 DB 表、不加依赖。首次实现走 brainstorming -> TDD -> code-review 闭环。

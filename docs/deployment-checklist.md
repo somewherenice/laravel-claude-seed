@@ -12,6 +12,7 @@
 - [ ] 队列 / 调度 worker 已配(supervisor / Laravel Cloud)
 - [ ] 定时任务 cron 已配(`schedule:run`)
 - [ ] 备份:DB 已备份,可回滚
+- [ ] 主机 NTP/SNTP 时间同步已启用(审计日志时间戳与其他系统一致)
 
 ## 部署后验证
 
