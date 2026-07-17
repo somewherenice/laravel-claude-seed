@@ -27,3 +27,12 @@ AI 设计/编码翻车案例库。**会话开始对照本文件,把尚无对应 
 - **坑**:没查 plugin 自带什么。实际 figma plugin 自带 `figma-power/steering/implement-design.md` + 8 个 skills,逐条覆盖我写的内容--我写的是其劣化缩写,plugin 升级后手写版还会过时变错。用户要求自审、`ls` 了 plugin 目录才发现。
 - **根因**:(1) 顺手多做:用户只问"要不要加项目 CLAUDE.md",我加了项目还主动扩到种子 + push;(2) 凭 README 纸面预写未实战验证,违背"约定从实战翻车来"的传统;(3) 写 CLAUDE.md 段前没先查工具/plugin 自带 skills/steering/rules,默认手抄。
 - **判据/防范**:往 CLAUDE.md / 种子加任何工具相关约定前,先查该工具/plugin 是否自带 skills/steering/rules(读 plugin 目录、看 README rules 段)--自带就别手抄(冗余 + 易过时),要用时调 skill;约定优先来自实战踩坑后写本文件,不凭文档预写;用户问 A 只做 A,别顺手扩到 B + push。同源"动手前先查证、不静默假设"(呼应 CLAUDE.md 设计验证判据)。
+
+---
+
+## 跑 doc-generator 前未查 superpowers 已有 spec/plan:差点重复生成(2026-07-17)
+
+- **场景**:用户问"项目有架构图吗",AI ls `specs/`(doc-generator 默认产出路径)发现不存在,判断"全缺 spec/UML",建议并派 doc-generator 从零生成 `specs/` + `docs/UML.md`。
+- **坑**:项目实际已有 `docs/superpowers/specs/`(brainstorming 产出的模块设计 spec)+ `docs/superpowers/plans/`(实现 plan),是详尽的模块级设计,比 doc-generator 从代码反推更深。AI 只查了 doc-generator 默认产出路径 `specs/`,没查项目实际存放路径 `docs/superpowers/`;且 commit message 明确"归档 spec/plan"也视而不见。若按原 prompt 跑,`SPEC.md` 会重复发明已有模块设计且更浅。用户拦下指出后才查清。
+- **根因**:把"doc-generator 默认产出路径 `specs/`"当成"项目唯一可能的 spec 存放位置",没盘点项目实际文档存量;查文档时只查默认路径不查实际路径,且不看 commit/索引线索。同源"动手前先查证、不静默假设"(呼应 CLAUDE.md 设计验证判据)。
+- **判据/防范**:跑 doc-generator / 生成文档前,先查项目已有 spec/plan/文档存量--`find docs -type f`、看 `docs/superpowers/specs|plans/`、看最近 commit message 有无"spec/plan/归档"线索、看 `docs/adr/`。已有产出的模块别让 doc-generator 从零重写:`SPEC.md` 退化为索引页指向 `docs/superpowers/specs/`,doc-generator 只补真空白(PRD/全局 ARCHITECTURE/UML/API)。判据:doc-generator 五个产出逐个问"这个项目是否已有更详尽版本",有则不重写。
