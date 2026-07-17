@@ -36,3 +36,12 @@ AI 设计/编码翻车案例库。**会话开始对照本文件,把尚无对应 
 - **坑**:项目实际已有 `docs/superpowers/specs/`(brainstorming 产出的模块设计 spec)+ `docs/superpowers/plans/`(实现 plan),是详尽的模块级设计,比 doc-generator 从代码反推更深。AI 只查了 doc-generator 默认产出路径 `specs/`,没查项目实际存放路径 `docs/superpowers/`;且 commit message 明确"归档 spec/plan"也视而不见。若按原 prompt 跑,`SPEC.md` 会重复发明已有模块设计且更浅。用户拦下指出后才查清。
 - **根因**:把"doc-generator 默认产出路径 `specs/`"当成"项目唯一可能的 spec 存放位置",没盘点项目实际文档存量;查文档时只查默认路径不查实际路径,且不看 commit/索引线索。同源"动手前先查证、不静默假设"(呼应 CLAUDE.md 设计验证判据)。
 - **判据/防范**:跑 doc-generator / 生成文档前,先查项目已有 spec/plan/文档存量--`find docs -type f`、看 `docs/superpowers/specs|plans/`、看最近 commit message 有无"spec/plan/归档"线索、看 `docs/adr/`。已有产出的模块别让 doc-generator 从零重写:`SPEC.md` 退化为索引页指向 `docs/superpowers/specs/`,doc-generator 只补真空白(PRD/全局 ARCHITECTURE/UML/API)。判据:doc-generator 五个产出逐个问"这个项目是否已有更详尽版本",有则不重写。
+
+---
+
+## 盲信 doc-generator 产出未自审:6 Critical 脑补(2026-07-17)
+
+- **场景**:doc-generator 生成全局文档,subagent 报"从真实代码归纳,不脑补"。主会话抽查文件存在+行数+几个点就准备 commit,用户要求"自审"才派 reviewer。
+- **坑**:doc-generator 在架构/UML 文档脑补了 6 个 Critical,全与代码/ADR 冲突:虚构关联表 + Model 关系(实际 JSON 列 + enum)、事件 Subscriber 类(实际分散 listener + 中间件 + 静态调用)、Observer 类(实际 controller 直接 dispatch)、多个类名张冠李戴、guard 名错、`AuthServiceProvider` + `Gate::define`(实际 `AppServiceProvider` 单个 `Gate::before`)。reviewer 逐条 grep 代码证实,主会话再核实全属实,修复后测试全绿。
+- **根因**:盲信 subagent"从代码归纳不脑补"的自述,只抽查文件存在+行数就准备入库,没逐条核实技术断言对照代码。doc-generator 从代码归纳时会用框架一般知识填充没读到的细节(类名/表/中间件链/事件名),产出看似合理但与代码不符。
+- **判据/防范**:doc-generator / 任何文档生成 subagent 产出后,主会话必须自审--派 reviewer(或亲自)逐条核实技术断言对照代码:类名 grep `class X`、表结构读 migration、中间件链读 `bootstrap/app.php` + routes、guard 读 `config/auth.php`、路由 `route:list`、配置读 `config/`。不符就修,不能盲信 subagent 自述。高发脑补区:关联表/Model 关系(belongsToMany vs JSON 列)、事件 Subscriber/Observer 类名、中间件链顺序、guard 名、`Gate::define` vs `Gate::before`。同源"subagent 产出别盲信"(呼应 CLAUDE.md 设计验证判据 + 查存量判据)。

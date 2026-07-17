@@ -199,7 +199,7 @@ This project has domain-specific skills available in `**/skills/**`. You MUST ac
 以下文档该写但不会自动产生。AI 在合适时机主动建议,用户确认后执行:
 
 - **架构决策 -> ADR**:检测到用户做了有架构意义的决策(选方案、定数据模型、改关键约定、引入/移除依赖)时,主动建议"这该写条 ADR,要我套 `docs/adr/0000-template.md` 整理吗?"。确认后套四段式写 `docs/adr/NNNN-*.md` 并追加索引到 `adr/README.md`。
-- **业务代码成型 -> specs + UML/架构图**:业务代码到一定量、功能成型时,主动建议"该跑 doc-generator 生成 specs 了,要现在跑吗?"。确认后调用 `doc-generator` agent,产出 `specs/`(PRD/ARCHITECTURE/SPEC/API)+ `docs/UML.md`(架构图/类图/时序图)。**跑前先查已有存量**:`find docs -type f` + 看 `docs/superpowers/specs|plans/` + 最近 commit 有无"spec/plan/归档"线索;已有模块 spec 别让 doc-generator 从零重写,`SPEC.md` 退化为索引页指向 `docs/superpowers/specs/`,只补 PRD/全局 ARCHITECTURE/UML/API 真空白。见 `docs/lessons.md`「跑 doc-generator 前未查 superpowers 已有 spec/plan」。
+- **业务代码成型 -> specs + UML/架构图**:业务代码到一定量、功能成型时,主动建议"该跑 doc-generator 生成 specs 了,要现在跑吗?"。确认后调用 `doc-generator` agent,产出 `specs/`(PRD/ARCHITECTURE/SPEC/API)+ `docs/UML.md`(架构图/类图/时序图)。**跑前先查已有存量**:`find docs -type f` + 看 `docs/superpowers/specs|plans/` + 最近 commit 有无"spec/plan/归档"线索;已有模块 spec 别让 doc-generator 从零重写,`SPEC.md` 退化为索引页指向 `docs/superpowers/specs/`,只补 PRD/全局 ARCHITECTURE/UML/API 真空白。见 `docs/lessons.md`「跑 doc-generator 前未查 superpowers 已有 spec/plan」。**产出后必自审**:doc-generator 易脑补技术断言(关联表/Subscriber/Observer 类名/中间件链/guard/`Gate::define`),派 reviewer 或亲自逐条核实代码(类名 grep `class X`、表读 migration、guard 读 `config/auth.php`、路由 `route:list`),不符就修,别盲信 subagent 自述。见 `docs/lessons.md`「盲信 doc-generator 产出未自审」。
 - **跨模块/复杂设计 -> 开发文档**:讨论跨模块设计、复杂机制时,主动建议"这值得写篇开发文档放 `docs/`,要我整理吗?"。如 harness 设计、循环机制、数据流等(参考 laravel-ai-study 的 `ai-agent-harness.md`、`loop-engineering.md`)。
 
 工程约定文档(commit/deployment/observability 等)种子已带,项目直接用,不重写。
