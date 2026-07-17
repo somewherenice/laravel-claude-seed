@@ -246,3 +246,15 @@ brainstorming / 出方案时,凡涉及「与现有架构交互」的断言(auth/
 - `docs/rbac.md`(自建 RBAC 约定)
 
 审计日志走 Laravel Log(`audit` 通道 + `AuditLogger` 封装),不建 DB 表、不加依赖;密码策略、RBAC 见上述文档。首次实现走 brainstorming -> TDD -> code-review 闭环。
+
+---
+
+## figma plugin 按需就绪检查
+
+任务涉及设计稿 / 前端 UI 还原(从 Figma 取数据、生成代码)时,先确认 figma plugin 就绪:看可用工具是否有 `mcp__plugin_figma_figma__*` 的实际工具(非 `authenticate` / `complete_authentication`)。
+
+- 无任何 figma 工具 -> 未装:询问用户是否安装,给 `/plugin` 安装指引(marketplace + install)。
+- 仅有 `authenticate` -> 已装未认证:询问是否现在走 OAuth(`mcp__plugin_figma_figma__authenticate`)。
+- 有实际 figma 工具 -> 已就绪:直接用,不重复问。
+
+figma 是用户级 plugin(不在本种子/项目),使用规则不手抄--plugin 自带 steering + skills,见 `docs/lessons.md`「figma 手抄 steering」教训。
