@@ -89,7 +89,9 @@ boost 的 `search-docs` 按本项目已装版本自动匹配,优先用于 Larave
 - **非官方托管第三方包**(spatie 系列、dompdf / medialibrary、horizon 等)-> context7(传包名 + 版本号;context7 拉版本需手动传,易漏传错传,务必带上本项目已装版本)。
 - **boost 的非文档工具**(`database-schema` / `database-query` / `get-absolute-url` / `browser-logs` / `last-error` / `application-info`)永远用 boost,context7 无对应能力。
 
-context7 是 user scope MCP(已装,远程 HTTP `https://mcp.context7.com/mcp`),免费匿名低限;需更高限额去 context7.com/dashboard 生成 `CONTEXT7_API_KEY` 再配。装 MCP 后需重启会话才在本会话生效。
+**context7 按需就绪检查**(user scope MCP,装一次全局可用):用 context7 前看可用工具是否有 `mcp__context7__*`。
+- 无 -> 未装:问用户是否现在装,给命令 `claude mcp add --scope user --transport http context7 https://mcp.context7.com/mcp`(远程 HTTP,免费匿名低限;需更高限额去 context7.com/dashboard 生成 `CONTEXT7_API_KEY` 再配)。装后**需重启会话**才生效。
+- 有 -> 已就绪:直接用。
 
 ## Artisan
 
@@ -279,3 +281,18 @@ brainstorming / 出方案时,凡涉及「与现有架构交互」的断言(auth/
 - 有实际 figma 工具 -> 已就绪:直接用,不重复问。
 
 figma 是用户级 plugin(不在本种子/项目),使用规则不手抄--plugin 自带 steering + skills,见 `docs/lessons.md`「figma 手抄 steering」教训。
+
+---
+
+## laravel agent(plugin)按需使用约定
+
+`laravel@laravel` plugin(marketplace `laravel/agent-skills`,Taylor Otwell 官方)含 `laravel-simplifier` agent + `starter-kit-upgrade` skill。**user scope--新环境/新机器装一次,所有项目共享**(不是每个项目都装,故不会"忘装"):
+
+```
+claude plugin marketplace add laravel/agent-skills
+claude plugin install laravel@laravel -s user
+```
+
+- **定位**:`laravel-simplifier` 是收尾型 agent--AI 大量改完代码后,审查最近改动的 PHP 文件,在不改功能前提下简化(套 Laravel 约定 + PSR-12、降嵌套、改善命名)。与 `laravel-best-practices` skill(写代码时实时规范)、superpowers `requesting-code-review`(提交前自审)分工:事前规范 / 事后清理 / 提交前自审,不重复跑。
+- **用法**:**手动触发,不自动跑**(agent 不像 skill 会按 description 自动触发)。对 AI 说 `Review recent changes using the laravel agent`,或 `/agents` 选 laravel-simplifier。装后需重启会话才生效。
+- **注意**:agent `model: opus`,调用成本较高,按需用(一轮大改后跑一次),别频繁;它报「测试通过」后**必须自己 `php artisan test` 确认**(agent 自述不可信);agent prompt 不手抄(plugin 自带,参照 figma 教训)。
