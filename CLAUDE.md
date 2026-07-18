@@ -81,6 +81,16 @@ This project has domain-specific skills available in `**/skills/**`. You MUST ac
 3. Combine words and phrases for mixed queries: `middleware "rate limit"`.
 4. Use multiple queries for OR logic: `queries=["authentication", "middleware"]`.
 
+### 文档源分工:boost `search-docs` vs context7
+
+boost 的 `search-docs` 按本项目已装版本自动匹配,优先用于 Laravel 官方生态;context7 补「非官方托管第三方包」文档缺口。两者不混用,按下面分工选,避免每次随机挑:
+
+- **Laravel 官方生态**(laravel/framework 及 Inertia / Pest / Livewire / Filament / Nova / Tailwind 等 Laravel 托管文档)-> 优先 boost `search-docs`(版本自动匹配,免传版本号,拿到错版本 API 的风险低)。
+- **非官方托管第三方包**(spatie 系列、dompdf / medialibrary、horizon 等)-> context7(传包名 + 版本号;context7 拉版本需手动传,易漏传错传,务必带上本项目已装版本)。
+- **boost 的非文档工具**(`database-schema` / `database-query` / `get-absolute-url` / `browser-logs` / `last-error` / `application-info`)永远用 boost,context7 无对应能力。
+
+context7 是 user scope MCP(已装,远程 HTTP `https://mcp.context7.com/mcp`),免费匿名低限;需更高限额去 context7.com/dashboard 生成 `CONTEXT7_API_KEY` 再配。装 MCP 后需重启会话才在本会话生效。
+
 ## Artisan
 
 - Run Artisan commands directly via the command line (e.g., `php artisan route:list`). Use `php artisan list` to discover available commands and `php artisan [command] --help` to check parameters.
