@@ -194,6 +194,16 @@ This project has domain-specific skills available in `**/skills/**`. You MUST ac
 
 ---
 
+## 敏感文件(.env / 密钥)
+
+- 不擅自读、改 `.env` / `.env.*` / 含密钥的配置文件。需读改先征得同意,只动必要字段。
+- 绝不把 `.env` 真实值(密码、密钥、token、APP_KEY)持久化到 memory、文档、plan、spec、注释、commit、对话输出。需 refer 写「.env 已配」/「见 .env」。
+- 排查泄露只查 git 跟踪状态/历史(`git ls-files`、`git log -- <file>`),不 `cat`/`grep`/`Read` 内容。
+
+> 此约束语言无关,同步见全局 `~/.claude/CLAUDE.md`「敏感文件」段;此处保留是让 Laravel 种子自包含,复制进新项目即生效。
+
+---
+
 ## 文档产出提醒(AI 主动建议)
 
 以下文档该写但不会自动产生。AI 在合适时机主动建议,用户确认后执行:
@@ -201,10 +211,11 @@ This project has domain-specific skills available in `**/skills/**`. You MUST ac
 - **架构决策 -> ADR**:检测到用户做了有架构意义的决策(选方案、定数据模型、改关键约定、引入/移除依赖)时,主动建议"这该写条 ADR,要我套 `docs/adr/0000-template.md` 整理吗?"。确认后套四段式写 `docs/adr/NNNN-*.md` 并追加索引到 `adr/README.md`。
 - **业务代码成型 -> specs + UML/架构图**:业务代码到一定量、功能成型时,主动建议"该跑 doc-generator 生成 specs 了,要现在跑吗?"。确认后调用 `doc-generator` agent,产出 `specs/`(PRD/ARCHITECTURE/SPEC/API)+ `docs/UML.md`(架构图/类图/时序图)。**跑前先查已有存量**:`find docs -type f` + 看 `docs/superpowers/specs|plans/` + 最近 commit 有无"spec/plan/归档"线索;已有模块 spec 别让 doc-generator 从零重写,`SPEC.md` 退化为索引页指向 `docs/superpowers/specs/`,只补 PRD/全局 ARCHITECTURE/UML/API 真空白。见 `docs/lessons.md`「跑 doc-generator 前未查 superpowers 已有 spec/plan」。**产出后必自审**:doc-generator 易脑补技术断言(关联表/Subscriber/Observer 类名/中间件链/guard/`Gate::define`),派 reviewer 或亲自逐条核实代码(类名 grep `class X`、表读 migration、guard 读 `config/auth.php`、路由 `route:list`),不符就修,别盲信 subagent 自述。见 `docs/lessons.md`「盲信 doc-generator 产出未自审」。
 - **跨模块/复杂设计 -> 开发文档**:讨论跨模块设计、复杂机制时,主动建议"这值得写篇开发文档放 `docs/`,要我整理吗?"。如 harness 设计、循环机制、数据流等(参考 laravel-ai-study 的 `ai-agent-harness.md`、`loop-engineering.md`)。
+- **阶段完成/代码积累 -> guidelines(设计模式与编码规范)**:功能完成或代码积累到一定量、形成稳定模式时,主动建议"该把项目特有的设计模式与编码约定提取成 `guidelines.md` 了,要现在做吗?"。确认后**亲自通读 `app/` 全部代码**(不派 subagent,避免脑补技术断言),提取项目特有模式(目录分层/认证 guard/RBAC/审计/安全防御/PII 防护/测试约定/反模式清单),每条标注源文件可核实,写入项目根 `guidelines.md`。定位为**补充**(非重复)`CLAUDE.md` 通用规范、`docs/` 工程流程、`specs/` 架构需求。**已有 `guidelines.md` 则跳过不重写**。同源教训见 `docs/lessons.md`「盲信 doc-generator 产出未自审」(文档类产出必亲自核实代码)。
 
 工程约定文档(commit/deployment/observability 等)种子已带,项目直接用,不重写。
 
-不自动跑:doc-generator 是重 agent 调用,ADR 需人确认是架构决策,自动跑时机/产出不准。AI 只建议,人确认后才执行。
+不自动跑:doc-generator 是重 agent 调用,ADR 需人确认是架构决策,guidelines 需人确认提取时机;自动跑时机/产出不准。AI 只建议,人确认后才执行。
 
 ---
 
